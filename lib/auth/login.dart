@@ -120,7 +120,7 @@ class _Logn extends State<Logn> {
           ),
           InkWell(
             onTap: () {
-              Navigator.of(context).pushNamed("Sign");
+              Navigator.of(context).pushReplacementNamed("Sign");
             },
             child: Center(
               child: Text.rich(
