@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:FirebaseAuth.instance.currentUser == null ? Logn():Homepage(),
+      home:(FirebaseAuth.instance.currentUser != null &&FirebaseAuth.instance.currentUser!.emailVerified ) ?Homepage(): Logn(),
       routes: {
         "Sign": (context) => Sign(),
         "Logn": (context) => Logn(),
@@ -45,3 +45,5 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+//
+// mohammad

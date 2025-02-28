@@ -96,7 +96,8 @@ class _Sign extends State<Sign> {
                   email: email.text,
                   password: password.text,
                 );
-                Navigator.of(context).pushReplacementNamed("home");
+                FirebaseAuth.instance.currentUser!.sendEmailVerification();
+                Navigator.of(context).pushReplacementNamed("logn");
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'weak-password') {
                   print('The password provided is too weak.');
