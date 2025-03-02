@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'auth/signup.dart';
+import 'catogares/add.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,11 +36,23 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:(FirebaseAuth.instance.currentUser != null &&FirebaseAuth.instance.currentUser!.emailVerified ) ?Homepage(): Logn(),
+      theme: ThemeData(
+          appBarTheme: AppBarTheme(
+              backgroundColor: Colors.grey[300],
+              titleTextStyle: TextStyle(
+                  color: Colors.orange,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20),
+              iconTheme: IconThemeData(color: Colors.orange))),
+      home: (FirebaseAuth.instance.currentUser != null &&
+              FirebaseAuth.instance.currentUser!.emailVerified)
+          ? Homepage()
+          : Logn(),
       routes: {
         "Sign": (context) => Sign(),
         "Logn": (context) => Logn(),
         "home": (context) => Homepage(),
+        "Addcat": (context) => Addcat(),
 
       },
     );

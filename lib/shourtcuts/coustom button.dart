@@ -7,7 +7,7 @@ class butn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      color: Colors.red,
+      color: Colors.orange,
       height: 60,
       shape:
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(70)),
