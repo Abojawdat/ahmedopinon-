@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -10,6 +11,23 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  List<QueryDocumentSnapshot> data = [];
+
+  getdata() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('categories').get();
+    data.addAll(querySnapshot.docs);
+    setState(() {
+
+    });
+  }
+
+  @override
+  void initState() {
+    getdata();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +36,10 @@ class _HomepageState extends State<Homepage> {
         onPressed: () {
           Navigator.of(context).pushNamed("Addcat");
         },
-        child: Icon(Icons.add,color: Colors.white,),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
       appBar: AppBar(
         title: Text("Home"),
@@ -35,11 +56,13 @@ class _HomepageState extends State<Homepage> {
           ),
         ],
       ),
-      body: GridView(
+      body: GridView.builder(
+        itemCount: data.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, mainAxisExtent: 160),
-        children: [
-          Card(
+        itemBuilder: (context, i) {
+
+           return Card(
             child: Container(
               padding: EdgeInsets.all(10),
               child: Column(
@@ -49,7 +72,7 @@ class _HomepageState extends State<Homepage> {
                     size: 100,
                   ),
                   Text(
-                    "Company",
+                    "${data[i]['name']}",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.orange,
@@ -58,28 +81,8 @@ class _HomepageState extends State<Homepage> {
                 ],
               ),
             ),
-          ),
-          Card(
-            child: Container(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  Icon(
-                    Icons.folder_copy_outlined,
-                    size: 100,
-                  ),
-                  Text(
-                    "Home",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.orange,
-                        fontSize: 20),
-                  )
-                ],
-              ),
-            ),
-          )
-        ],
+          );
+        },
       ),
     );
   }
