@@ -1,6 +1,7 @@
 import 'package:ahh/shourtcuts/coustom%20button.dart';
 import 'package:ahh/shourtcuts/textfoormadd.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,9 +22,8 @@ class _AddcatState extends State<Addcat> {
   Future<void> addUser() async {
     if (formState.currentState!.validate()) {
       try {
-        await categories.add({
-          'name': name.text,
-        });
+        await categories.add(
+            {'name': name.text, 'id': FirebaseAuth.instance.currentUser!.uid});
 
         print("Category Added");
         Navigator.of(context).pushReplacementNamed("home");
