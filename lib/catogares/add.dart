@@ -13,6 +13,7 @@ class Addcat extends StatefulWidget {
 }
 
 class _AddcatState extends State<Addcat> {
+  bool isloading = false;
   GlobalKey<FormState> formState = GlobalKey<FormState>();
   TextEditingController name = TextEditingController();
 
@@ -22,12 +23,16 @@ class _AddcatState extends State<Addcat> {
   Future<void> addUser() async {
     if (formState.currentState!.validate()) {
       try {
+        isloading = true;
+        setState(() {});
         await categories.add(
             {'name': name.text, 'id': FirebaseAuth.instance.currentUser!.uid});
 
         print("Category Added");
-        Navigator.of(context).pushReplacementNamed("home");
+        Navigator.of(context).pushNamedAndRemoveUntil("home", (route) => false);
       } catch (error) {
+        isloading = false;
+        setState(() {});
         print("Failed to add category: $error");
       }
     }
@@ -39,7 +44,9 @@ class _AddcatState extends State<Addcat> {
       appBar: AppBar(
         title: Text("Add Category"),
       ),
-      body: Form(
+      body: isloading
+          ? const Center(child: CircularProgressIndicator())
+          :  Form(
           key: formState,
           child: Column(
             children: [

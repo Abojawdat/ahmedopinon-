@@ -52,7 +52,6 @@ class _MyAppState extends State<MyApp> {
         "Logn": (context) => Logn(),
         "home": (context) => Homepage(),
         "Addcat": (context) => Addcat(),
-
       },
     );
   }
